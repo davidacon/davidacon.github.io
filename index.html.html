@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stellium, Homo Spiritus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink: #05040f;
+      --deep: #0b0820;
+      --navy: #0f1535;
+      --gold: #c9a84c;
+      --gold-soft: #e8d5a3;
+      --blush: #e8c4b8;
+      --star: #f5f0e8;
+      --text: #d4cfc7;
+      --muted: #7a7490;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--ink);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+      mix-blend-mode: screen;
+    }
+    .cursor.expanded { width: 40px; height: 40px; opacity: 0.4; }
+
+    /* Stars canvas */
+    #stars-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      z-index: 1;
+    }
+
+    .hero-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 400;
+      color: var(--star);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 0.5s forwards;
+    }
+
+    .hero-title span {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: var(--gold-soft);
+      letter-spacing: 0.15em;
+      margin-top: 1rem;
+      font-weight: 300;
+    }
+
+    .hero-sub {
+      margin-top: 2.5rem;
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.9s forwards;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.4s forwards;
+    }
+
+    .scroll-hint span {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .scroll-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0 4rem;
+      margin: 0 auto;
+      max-width: 800px;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0.4;
+    }
+
+    .divider-star {
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      opacity: 0.3;
+      max-width: 120px;
+    }
+
+    /* ── STATEMENT ── */
+    .statement-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      line-height: 1.75;
+      color: var(--star);
+      font-weight: 300;
+    }
+
+    .statement-text em {
+      font-style: italic;
+      color: var(--gold-soft);
+    }
+
+    .statement-text p + p {
+      margin-top: 1.8rem;
+    }
+
+    .statement-closing {
+      margin-top: 3rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 2;
+      border-left: 1px solid var(--gold);
+      padding-left: 1.5rem;
+      opacity: 0.8;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .gallery-item {
+      aspect-ratio: 3/4;
+      background: var(--navy);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+      cursor: none;
+    }
+
+    .gallery-item:hover {
+      border-color: rgba(201, 168, 76, 0.5);
+      transform: translateY(-4px);
+    }
+
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(201,168,76,0.05), transparent 70%);
+    }
+
+    .gallery-placeholder-star {
+      font-size: 2rem;
+      opacity: 0.3;
+    }
+
+    .gallery-placeholder-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .gallery-item-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .gallery-wide {
+      grid-column: span 2;
+      aspect-ratio: 2/1;
+    }
+
+    .gallery-note {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.05em;
+      font-style: italic;
+    }
+
+    /* ── CONTACT ── */
+    .contact-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-field label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+      padding: 0.75rem 0;
+      color: var(--star);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.3s ease;
+      cursor: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-field select {
+      background-color: transparent;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+    }
+
+    .form-field select option {
+      background: var(--deep);
+      color: var(--star);
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-bottom-color: var(--gold);
+    }
+
+    .form-field textarea {
+      resize: none;
+      min-height: 120px;
+      line-height: 1.8;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .submit-btn {
+      align-self: flex-start;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      cursor: none;
+      transition: background 0.3s ease, color 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .footer-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: var(--star);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .footer-stars {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--gold);
+      font-size: 0.6rem;
+      opacity: 0.5;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-wide { grid-column: span 2; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <canvas id="stars-canvas"></canvas>
+
+  <!-- Reusable rounded 5-pointed star symbol -->
+  <svg style="display:none" aria-hidden="true">
+    <defs>
+      <symbol id="star5" viewBox="0 0 24 24">
+        <path d="M12,3 L14.23,8.93 L20.56,9.22 L15.61,13.17 L17.29,19.28 L12,15.8 L6.71,19.28 L8.39,13.17 L3.44,9.22 L9.77,8.93 Z"
+          fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-label">A ceramic series by [Your Name]</p>
+    <h1 class="hero-title">
+      Stellium
+      <span>Homo Spiritus</span>
+    </h1>
+    <p class="hero-sub">The next evolutionary step is almost here &nbsp;<svg width="13" height="13" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;color:var(--gold)"><use href="#star5"/></svg></p>
+    <div class="scroll-hint">
+      <span>Explore</span>
+      <div class="scroll-dot"></div>
+    </div>
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="divider reveal">
+    <div class="divider-line"></div>
+    <span class="divider-star"><svg width="14" height="14" viewBox="0 0 24 24" style="display:block;color:var(--gold)"><use href="#star5"/></svg></span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ARTIST STATEMENT -->
+  <section>
+    <div class="section-label reveal">Artist Statement</div>
+    <div class="statement-text reveal">
+      <p>
+        <em>Stellium</em> is a ceramic series exploring the next evolutionary step of the human species.
+      </p>
+      <p>
+        Emerging from the accumulated weight of millennia of human experience, every emotion felt, every lesson lived, <em>Homo Spiritus</em> is the species that comes after us. Colloquially known as <em>Raves</em>, these beings carry the cosmos on their skin and wear their inner world openly, with no separation between what they feel and what they are.
+      </p>
+      <p>
+        Each of the five figures in <em>Stellium</em> is a distinct individual of the same species, unified by a shared origin and endlessly varied in expression. Together they form a penta: one is all.
+      </p>
+      <p>
+        To our present eyes, they shimmer with something we can only call cosmic. But they are not aliens. They are us, fully integrated, emotionally alive, and at home in the universe in a way we are only beginning to imagine.
+      </p>
+    </div>
+    <div class="statement-closing reveal">
+      Hopeful, because these beings came from us.<br/>
+      Humbling, because we are not the final form.<br/>
+      Curious, because they are so close you can almost touch them.
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider reveal">
+    <div class="divider-line"></div>
+    <span class="divider-star"><svg width="14" height="14" viewBox="0 0 24 24" style="display:block;color:var(--gold)"><use href="#star5"/></svg></span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- GALLERY -->
+  <section>
+    <div class="section-label reveal">The Raves</div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item">
+        <div class="gallery-placeholder-star"><svg width="28" height="28" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.3"><use href="#star5"/></svg></div>
+        <div class="gallery-placeholder-text">Image</div>
+        <div class="gallery-item-label">Rave I</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder-star"><svg width="28" height="28" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.3"><use href="#star5"/></svg></div>
+        <div class="gallery-placeholder-text">Image</div>
+        <div class="gallery-item-label">Rave II</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder-star"><svg width="28" height="28" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.3"><use href="#star5"/></svg></div>
+        <div class="gallery-placeholder-text">Image</div>
+        <div class="gallery-item-label">Rave III</div>
+      </div>
+      <div class="gallery-item gallery-wide">
+        <div class="gallery-placeholder-star"><svg width="28" height="28" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.3"><use href="#star5"/></svg></div>
+        <div class="gallery-placeholder-text">Image</div>
+        <div class="gallery-item-label">Rave IV &nbsp;&nbsp;·&nbsp;&nbsp; Rave V</div>
+      </div>
+    </div>
+    <p class="gallery-note reveal">Photography coming soon &nbsp;<svg width="11" height="11" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;color:var(--muted)"><use href="#star5"/></svg>&nbsp; Five ceramic figures, 2025</p>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider reveal">
+    <div class="divider-line"></div>
+    <span class="divider-star"><svg width="14" height="14" viewBox="0 0 24 24" style="display:block;color:var(--gold)"><use href="#star5"/></svg></span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- CONTACT -->
+  <section>
+    <div class="section-label reveal">Inquiries</div>
+    <p class="contact-intro reveal">
+      For inquiries reach out below.
+    </p>
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your name" required />
+        </div>
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="type">Nature of inquiry</label>
+        <select id="type">
+          <option value="">Select one</option>
+          <option value="acquisition">Acquisition</option>
+          <option value="exhibition">Exhibition</option>
+          <option value="press">Press</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Tell me about your interest in Stellium…"></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Inquiry</button>
+      <p id="form-confirm" style="display:none; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--gold-soft); font-size:1rem;">
+        <svg width="12" height="12" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;color:var(--gold-soft)"><use href="#star5"/></svg> &nbsp; Thank you. I'll be in touch soon.
+      </p>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-title">Stellium</div>
+    <div class="footer-sub">Homo Spiritus &nbsp;·&nbsp; [Your Name] &nbsp;·&nbsp; 2025</div>
+    <div class="footer-stars">
+      <svg width="12" height="12" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.5"><use href="#star5"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.5"><use href="#star5"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.5"><use href="#star5"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.5"><use href="#star5"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.5"><use href="#star5"/></svg>
+    </div>
+  </footer>
+
+  <script>
+    // ── Cursor ──
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .gallery-item, input, select, textarea').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+    });
+
+    // ── Stars canvas ──
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initStars();
+    }
+
+    function initStars() {
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 6000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.2 + 0.2,
+          o: Math.random() * 0.6 + 0.1,
+          speed: Math.random() * 0.3 + 0.05,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function drawStars(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        const opacity = s.o * (0.6 + 0.4 * Math.sin(t * s.speed + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245, 240, 232, ${opacity})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(drawStars);
+
+    // ── Scroll reveal ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+
+    // ── Form ──
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.querySelector('.submit-btn').style.display = 'none';
+      document.getElementById('form-confirm').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
