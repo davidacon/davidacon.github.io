@@ -73,6 +73,7 @@
       font-family: 'DM Sans', sans-serif;
       font-size: 0.7rem;
       letter-spacing: 0.35em;
+      text-indent: 0.35em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 2rem;
@@ -107,42 +108,12 @@
       font-size: clamp(0.85rem, 1.5vw, 1rem);
       color: var(--muted);
       letter-spacing: 0.1em;
+      text-indent: 0.1em;
       opacity: 0;
       animation: fadeUp 1s ease 0.9s forwards;
     }
 
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-      opacity: 0;
-      animation: fadeUp 1s ease 1.4s forwards;
-    }
 
-    .scroll-hint span {
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .scroll-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.4); }
-    }
 
     /* ── DIVIDER ── */
     .divider {
@@ -487,10 +458,7 @@
       <span>Homo Spiritus</span>
     </h1>
     <p class="hero-sub">The next evolutionary step is almost here &nbsp;<svg width="13" height="13" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;color:var(--gold)"><use href="#star5"/></svg></p>
-    <div class="scroll-hint">
-      <span>Explore</span>
-      <div class="scroll-dot"></div>
-    </div>
+
   </div>
 
   <!-- DIVIDER -->
