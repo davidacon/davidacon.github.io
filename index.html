@@ -194,7 +194,9 @@
       overflow: hidden; display: flex; align-items: center;
       justify-content: center; flex-direction: column; gap: 0.4rem;
     }
-    .sketch-img img { width: 100%; height: 100%; object-fit: cover; }
+    .sketch-img img { width: 100%; height: 100%; object-fit: contain; padding: 0.5rem; }
+    .sketch-img.sketch-colored { background: #f9f7f4; }
+    .sketch-img.ceramic { background: var(--deep); border-color: rgba(201,168,76,.08); }
     .sketch-img.ceramic { background: var(--deep); border-color: rgba(201,168,76,0.08); }
     .sketch-img-label {
       font-size: 0.5rem; letter-spacing: 0.2em;
@@ -346,7 +348,7 @@
       <div class="sketch-pair">
         <div class="sketch-pair-label">Rave I &nbsp;&nbsp;·&nbsp;&nbsp; Rave II</div>
         <div class="sketch-imgs">
-          <div class="sketch-img">
+          <div class="sketch-img sketch-colored">
             <img src="images/rave-1-sketch.jpg" alt="Rave I colored sketch" onerror="this.style.display='none'"/>
             <span class="sketch-img-label">Sketch</span>
           </div>
@@ -354,7 +356,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.15"><use href="#star5"/></svg>
             <span class="sketch-img-label">Ceramic</span>
           </div>
-          <div class="sketch-img">
+          <div class="sketch-img sketch-colored">
             <img src="images/rave-2-sketch.jpg" alt="Rave II colored sketch" onerror="this.style.display='none'"/>
             <span class="sketch-img-label">Sketch</span>
           </div>
@@ -367,7 +369,7 @@
       <div class="sketch-pair">
         <div class="sketch-pair-label">Rave III &nbsp;&nbsp;·&nbsp;&nbsp; Rave IV</div>
         <div class="sketch-imgs">
-          <div class="sketch-img">
+          <div class="sketch-img sketch-colored">
             <img src="images/rave-3-sketch.jpg" alt="Rave III colored sketch" onerror="this.style.display='none'"/>
             <span class="sketch-img-label">Sketch</span>
           </div>
@@ -375,7 +377,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.15"><use href="#star5"/></svg>
             <span class="sketch-img-label">Ceramic</span>
           </div>
-          <div class="sketch-img">
+          <div class="sketch-img sketch-colored">
             <img src="images/rave-4-sketch.jpg" alt="Rave IV colored sketch" onerror="this.style.display='none'"/>
             <span class="sketch-img-label">Sketch</span>
           </div>
@@ -390,7 +392,7 @@
     <div class="sketch-pair reveal" style="margin-top:2rem; max-width:50%; margin-left:auto; margin-right:auto;">
       <div class="sketch-pair-label">Rave V</div>
       <div class="sketch-imgs">
-        <div class="sketch-img">
+        <div class="sketch-img sketch-colored">
           <img src="images/rave-5-sketch.jpg" alt="Rave V colored sketch" onerror="this.style.display='none'"/>
           <span class="sketch-img-label">Sketch</span>
         </div>
