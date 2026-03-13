@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rave III — Stellium</title>
+  <title>Stellium, by Davida C.</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -91,6 +91,34 @@
       .rave-content{padding:2rem 1.5rem 4rem;}
       nav{padding:1rem 1.5rem;}
     }
+  
+    /* CONTACT */
+    .contact-section {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 4rem 2rem; text-align: center;
+    }
+    .contact-location {
+      font-size: 0.65rem; letter-spacing: 0.4em; text-indent: 0.4em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 2rem;
+    }
+    .contact-links {
+      display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+    }
+    .contact-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--gold-soft); text-decoration: none;
+      font-style: italic; letter-spacing: 0.05em;
+      transition: color 0.3s ease; cursor: none;
+    }
+    .contact-link:hover { color: var(--star); }
+    .contact-divider {
+      width: 1px; height: 2rem;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: 0.3;
+    }
+
   </style>
 </head>
 <body>
@@ -131,8 +159,18 @@
     </div>
   </div>
 
+  <!-- CONTACT -->
+  <div class="contact-section">
+    <div class="contact-location">Bucharest, Romania</div>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:davidacon88@gmail.com">davidacon88@gmail.com</a>
+      <div class="contact-divider"></div>
+      <a class="contact-link" href="https://instagram.com/davida.constantinescu" target="_blank">@davida.constantinescu</a>
+    </div>
+  </div>
+
   <footer>
-    <div class="footer-sub">Stellium &nbsp;·&nbsp; Homo Spiritus &nbsp;·&nbsp; [Your Name] &nbsp;·&nbsp; 2025</div>
+    <div class="footer-sub">Stellium &nbsp;·&nbsp; Homo Spiritus &nbsp;·&nbsp; Davida Constantinescu &nbsp;·&nbsp; 2026</div>
   </footer>
 
   <script>
