@@ -272,12 +272,14 @@
     .footer-stars { display: flex; justify-content: center; gap: 0.75rem; }
 
     @media (max-width: 640px) {
-      /* Gallery: 2 columns, 5th item centered */
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      /* Gallery: 2 columns, 5th item centered and same size */
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
       .gallery-item:nth-child(5) {
-        grid-column: 1 / -1;
-        max-width: calc(50% - 0.5rem);
+        grid-column: 1 / 2;
         margin: 0 auto;
+        width: 100%;
       }
       /* Sketch section: single column, each rave its own full-width row */
       .sketch-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -472,7 +474,7 @@
     <div class="section-label" style="justify-content:center;">Contact</div>
     <div class="contact-location">Bucharest, Romania</div>
     <div class="contact-links">
-      <a class="contact-link" href="mailto:davidacon88@gmail.com">davidacon88@gmail.com</a>
+      <a class="contact-link" href="/cdn-cgi/l/email-protection#442025322d2025272b2a7c7c042329252d286a272b29"><span class="__cf_email__" data-cfemail="cfabaeb9a6abaeaca0a1f7f78fa8a2aea6a3e1aca0a2">[email&#160;protected]</span></a>
       <div class="contact-divider"></div>
       <a class="contact-link" href="https://instagram.com/davida.constantinescu" target="_blank">@davida.constantinescu</a>
     </div>
@@ -491,7 +493,7 @@
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
@@ -524,10 +526,4 @@
       requestAnimationFrame(drawStars);
     }
     window.addEventListener('resize', resize);
-    resize(); requestAnimationFrame(drawStars);
-    document.querySelectorAll('.reveal').forEach(r =>
-      new IntersectionObserver(([e]) => { if(e.isIntersecting) e.target.classList.add('visible'); },
-        {threshold:0.1}).observe(r));
-  </script>
-</body>
-</html>
+    resize(); requestA
