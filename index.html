@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Stellium, Homo Spiritus</title>
+  <title>Stellium, by Davida C.</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -208,7 +208,14 @@
       text-transform: uppercase; color: var(--muted);
     }
 
-    /* ANIMATIONS */
+    .sketch-pair-v {
+      grid-column: 1 / -1;
+      max-width: calc(50% - 1.5rem);
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) {
+      .sketch-pair-v { max-width: 100%; }
+    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
@@ -218,6 +225,35 @@
       transition: opacity 0.9s ease, transform 0.9s ease;
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* CONTACT */
+    .contact-section {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 6rem 2rem; text-align: center;
+    }
+    .contact-location {
+      font-size: 0.65rem; letter-spacing: 0.4em; text-indent: 0.4em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+    .contact-links {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 1.25rem;
+    }
+    .contact-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--gold-soft); text-decoration: none;
+      font-style: italic; letter-spacing: 0.05em;
+      transition: color 0.3s ease; cursor: none;
+    }
+    .contact-link:hover { color: var(--star); }
+    .contact-divider {
+      width: 1px; height: 2rem;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: 0.3;
+    }
 
     /* FOOTER */
     footer {
@@ -236,8 +272,17 @@
     .footer-stars { display: flex; justify-content: center; gap: 0.75rem; }
 
     @media (max-width: 640px) {
-      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
-      .sketch-grid { grid-template-columns: 1fr; }
+      /* Gallery: 2 columns, 5th item centered */
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item:nth-child(5) {
+        grid-column: 1 / -1;
+        max-width: calc(50% - 0.5rem);
+        margin: 0 auto;
+      }
+      /* Sketch section: single column, each rave its own full-width row */
+      .sketch-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .sketch-pair-label { display: none; }
+      .sketch-imgs { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -256,7 +301,7 @@
 
   <!-- HERO -->
   <div class="hero">
-    <p class="hero-label">A ceramic series by [Your Name]</p>
+    <p class="hero-label">A ceramic series by Davida Constantinescu</p>
     <h1 class="hero-title">
       Stellium
       <span>Homo Spiritus</span>
@@ -324,7 +369,7 @@
         <div class="gallery-item-label">Rave V</div>
       </a>
     </div>
-    <p class="gallery-note reveal">Photography coming soon &nbsp;<svg width="11" height="11" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;color:var(--muted)"><use href="#star5"/></svg>&nbsp; Five ceramic figures, 2025</p>
+    <p class="gallery-note reveal">Photography coming soon &nbsp;<svg width="11" height="11" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;color:var(--muted)"><use href="#star5"/></svg>&nbsp; Five ceramic figures, 2026</p>
   </section>
 
   <!-- DIVIDER -->
@@ -361,19 +406,19 @@
         <div class="sketch-imgs">
           <div class="sketch-img sketch-colored">
             <img src="images/rave-1-sketch.jpg" alt="Rave I colored sketch" onerror="this.style.display='none'"/>
-            <span class="sketch-img-label">Sketch</span>
+            <span class="sketch-img-label">Rave I · Sketch</span>
           </div>
           <div class="sketch-img ceramic">
             <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.15"><use href="#star5"/></svg>
-            <span class="sketch-img-label">Ceramic</span>
+            <span class="sketch-img-label">Rave I · Ceramic</span>
           </div>
           <div class="sketch-img sketch-colored">
             <img src="images/rave-2-sketch.jpg" alt="Rave II colored sketch" onerror="this.style.display='none'"/>
-            <span class="sketch-img-label">Sketch</span>
+            <span class="sketch-img-label">Rave II · Sketch</span>
           </div>
           <div class="sketch-img ceramic">
             <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.15"><use href="#star5"/></svg>
-            <span class="sketch-img-label">Ceramic</span>
+            <span class="sketch-img-label">Rave II · Ceramic</span>
           </div>
         </div>
       </div>
@@ -382,43 +427,61 @@
         <div class="sketch-imgs">
           <div class="sketch-img sketch-colored">
             <img src="images/rave-3-sketch.jpg" alt="Rave III colored sketch" onerror="this.style.display='none'"/>
-            <span class="sketch-img-label">Sketch</span>
+            <span class="sketch-img-label">Rave III · Sketch</span>
           </div>
           <div class="sketch-img ceramic">
             <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.15"><use href="#star5"/></svg>
-            <span class="sketch-img-label">Ceramic</span>
+            <span class="sketch-img-label">Rave III · Ceramic</span>
           </div>
           <div class="sketch-img sketch-colored">
             <img src="images/rave-4-sketch.jpg" alt="Rave IV colored sketch" onerror="this.style.display='none'"/>
-            <span class="sketch-img-label">Sketch</span>
+            <span class="sketch-img-label">Rave IV · Sketch</span>
           </div>
           <div class="sketch-img ceramic">
             <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.15"><use href="#star5"/></svg>
-            <span class="sketch-img-label">Ceramic</span>
+            <span class="sketch-img-label">Rave IV · Ceramic</span>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Rave V full width -->
-    <div class="sketch-pair reveal" style="margin-top:2rem; max-width:50%; margin-left:auto; margin-right:auto;">
-      <div class="sketch-pair-label">Rave V</div>
-      <div class="sketch-imgs">
-        <div class="sketch-img sketch-colored">
-          <img src="images/rave-5-sketch.jpg" alt="Rave V colored sketch" onerror="this.style.display='none'"/>
-          <span class="sketch-img-label">Sketch</span>
-        </div>
-        <div class="sketch-img ceramic">
-          <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.15"><use href="#star5"/></svg>
-          <span class="sketch-img-label">Ceramic</span>
+      <!-- Rave V — same structure as others, centered via CSS -->
+      <div class="sketch-pair sketch-pair-v">
+        <div class="sketch-pair-label">Rave V</div>
+        <div class="sketch-imgs">
+          <div class="sketch-img sketch-colored">
+            <img src="images/rave-5-sketch.jpg" alt="Rave V colored sketch" onerror="this.style.display='none'"/>
+            <span class="sketch-img-label">Rave V · Sketch</span>
+          </div>
+          <div class="sketch-img ceramic">
+            <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.15"><use href="#star5"/></svg>
+            <span class="sketch-img-label">Rave V · Ceramic</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- DIVIDER -->
+  <div class="divider reveal">
+    <div class="divider-line"></div>
+    <span style="color:var(--gold)"><svg width="14" height="14" viewBox="0 0 24 24" style="display:block"><use href="#star5"/></svg></span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-section reveal">
+    <div class="section-label" style="justify-content:center;">Contact</div>
+    <div class="contact-location">Bucharest, Romania</div>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:davidacon88@gmail.com">davidacon88@gmail.com</a>
+      <div class="contact-divider"></div>
+      <a class="contact-link" href="https://instagram.com/davida.constantinescu" target="_blank">@davida.constantinescu</a>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-title">Stellium</div>
-    <div class="footer-sub">Homo Spiritus &nbsp;·&nbsp; [Your Name] &nbsp;·&nbsp; 2025</div>
+    <div class="footer-sub">Homo Spiritus &nbsp;·&nbsp; Davida Constantinescu &nbsp;·&nbsp; 2026</div>
     <div class="footer-stars">
       <svg width="12" height="12" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.5"><use href="#star5"/></svg>
       <svg width="12" height="12" viewBox="0 0 24 24" style="color:var(--gold);opacity:0.5"><use href="#star5"/></svg>
