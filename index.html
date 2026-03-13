@@ -41,20 +41,6 @@
       text-align: center; padding: 4rem 2rem; z-index: 1;
       overflow: hidden;
     }
-    .hero-bg {
-      position: absolute; inset: 0;
-      display: grid; grid-template-columns: 1fr 1fr;
-      z-index: 0; pointer-events: none;
-    }
-    .hero-bg-img {
-      width: 100%; height: 100%; object-fit: cover;
-      opacity: 0.04; filter: grayscale(1) contrast(1.2);
-    }
-    .hero-bg::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 50%, transparent 20%, var(--ink) 75%);
-    }
     .hero-label {
       position: relative; z-index: 1;
       font-size: 0.7rem; letter-spacing: 0.35em; text-indent: 0.35em;
@@ -80,6 +66,26 @@
       margin-top: 2.5rem; font-size: clamp(0.85rem, 1.5vw, 1rem);
       color: var(--muted); letter-spacing: 0.1em; text-indent: 0.1em;
       opacity: 0; animation: fadeUp 1s ease 0.9s forwards;
+    }
+
+    /* BW SKETCHES SECTION */
+    .sketches-section {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; max-width: 900px; margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .sketch-bw-wrap {
+      background: #f5f3f0;
+      border-radius: 2px; overflow: hidden;
+      aspect-ratio: 3/4;
+    }
+    .sketch-bw-wrap img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      padding: 1rem;
+      display: block;
     }
 
     /* DIVIDER */
@@ -251,16 +257,22 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-bg">
-      <img class="hero-bg-img" src="images/sketch-bw-1.jpg" alt="" />
-      <img class="hero-bg-img" src="images/sketch-bw-2.jpg" alt="" />
-    </div>
     <p class="hero-label">A ceramic series by [Your Name]</p>
     <h1 class="hero-title">
       Stellium
       <span>Homo Spiritus</span>
     </h1>
     <p class="hero-sub">The next evolutionary step is almost here &nbsp;<svg width="13" height="13" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;color:var(--gold)"><use href="#star5"/></svg></p>
+  </div>
+
+  <!-- BW SKETCHES -->
+  <div class="sketches-section reveal">
+    <div class="sketch-bw-wrap">
+      <img src="images/sketch-bw-1.jpeg" alt="Body design concept sketches"/>
+    </div>
+    <div class="sketch-bw-wrap">
+      <img src="images/sketch-bw-2.jpeg" alt="Body design concept sketches"/>
+    </div>
   </div>
 
   <!-- DIVIDER -->
@@ -277,7 +289,7 @@
       <p><em>Stellium</em> is a ceramic series exploring the next evolutionary step of the human species.</p>
       <p>Emerging from the accumulated weight of millennia of human experience, every emotion felt, every lesson lived, <em>Homo Spiritus</em> is the species that comes after us. Colloquially known as <em>Raves</em>, these beings carry the cosmos on their skin and wear their inner world openly, with no separation between what they feel and what they are.</p>
       <p>Each of the five figures in <em>Stellium</em> is a distinct individual of the same species, unified by a shared origin and endlessly varied in expression. Together they form a penta: one is all.</p>
-      <p>To our present eyes, they shimmer with something we can only call cosmic. But they are not aliens. They are us, fully integrated, emotionally alive, and at home in the universe in a way we are only beginning to imagine.</p>
+      <p>To our present eyes, they shimmer with something we can only call cosmic. They are us, fully integrated, emotionally alive, and at home in the universe in a way we are only beginning to imagine.</p>
     </div>
   </section>
 
@@ -329,7 +341,7 @@
     <div class="penta-text reveal">
       <p>Each Rave is a distinct individual, yet they share the same origin, the same essential nature. Different expressions of the same soul, shaped by the same millennia of accumulated human experience.</p>
       <p>Together, the five form a <em>penta</em>, a complete whole. What appears as five is, at its root, one. And that one contains all five. The boundary between individual and collective dissolves, just as it does in <em>Homo Spiritus</em> themselves.</p>
-      <p>This is not metaphor. This is evolution.</p>
+      <p>This is evolution.</p>
     </div>
     <div class="penta-statement reveal">one is all</div>
   </section>
