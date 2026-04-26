@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://davidacon.github.io/sitemap.xml
